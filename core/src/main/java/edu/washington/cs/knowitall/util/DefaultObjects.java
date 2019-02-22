@@ -16,6 +16,8 @@ import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
+import ca.umontreal.rali.reverbfr.PatchedFrenchTokenizer;
+import ca.umontreal.rali.reverbfr.ReverbConfiguration;
 import edu.washington.cs.knowitall.extractor.HtmlSentenceExtractor;
 import edu.washington.cs.knowitall.extractor.SentenceExtractor;
 import edu.washington.cs.knowitall.extractor.mapper.BracketsRemover;
@@ -26,11 +28,12 @@ import edu.washington.cs.knowitall.nlp.ChunkedSentenceReader;
 
 public class DefaultObjects {
 
-    public static final String tokenizerModelFile = "en-token.bin";
-    public static final String taggerModelFile = "en-pos-maxent.bin";
-    public static final String chunkerModelFile = "en-chunker.bin";
-    public static final String sentDetectorModelFile = "en-sent.bin";
-    public static final String confFunctionModelFile = "reverb-conf-maxent.gz";
+    public static final String frenchResDirectory = "opennlp/fr-hernandez/";
+    public static final String tokenizerModelFile = ReverbConfiguration.isEn() ? "en-token.bin" : frenchResDirectory + "fr-token.bin";
+    public static final String taggerModelFile = ReverbConfiguration.isEn() ? "en-pos-maxent.bin" : frenchResDirectory + "fr-pos.bin";
+    public static final String chunkerModelFile = ReverbConfiguration.isEn() ? "en-chunker.bin" : frenchResDirectory + "fr-chunk.bin";
+    public static final String sentDetectorModelFile = ReverbConfiguration.isEn() ? "en-sent.bin" : frenchResDirectory + "fr-sent.bin";
+    public static final String confFunctionModelFile = ReverbConfiguration.isEn() ? "reverb-conf-maxent.gz" : frenchResDirectory + "reverb-conf-maxent.gz";
 
     /** Default singleton objects */
     private static BracketsRemover BRACKETS_REMOVER;
@@ -56,8 +59,9 @@ public class DefaultObjects {
     }
 
     public static Tokenizer getDefaultTokenizer() throws IOException {
-        return new TokenizerME(new TokenizerModel(
-                getResourceAsStream(tokenizerModelFile)));
+        return ReverbConfiguration.isEn() ? 
+               new TokenizerME(new TokenizerModel(getResourceAsStream(tokenizerModelFile))) :
+               new PatchedFrenchTokenizer();
     }
 
     public static POSTagger getDefaultPosTagger() throws IOException {
