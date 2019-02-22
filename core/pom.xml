@@ -1,30 +1,22 @@
-<?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>edu.washington.cs.knowitall</groupId>
-    <artifactId>knowitall-oss</artifactId>
-    <version>1.0.0</version>
-  </parent>
-  <groupId>edu.washington.cs.knowitall</groupId>
-  <artifactId>reverb-core</artifactId>
-  <version>1.4.3-SNAPSHOT</version>
+
+  <groupId>ca.umontreal.rali</groupId>
+  <artifactId>reverb-core-fr</artifactId>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
-  <name>ReVerb</name>
-  <description>A regular-expression based Open IE relation extractor.</description>
-  <inceptionYear>2010</inceptionYear>
+
+  <name>reverb-core-fr</name>
+  <url>http://maven.apache.org</url>
+  <description>A regular-expression based Open IE relation extractor, French version.</description>
   <licenses>
     <license>
       <name>ReVerb Software License Agreement</name>
       <url>http://reverb.cs.washington.edu/LICENSE.txt</url>
     </license>
   </licenses>
-  <scm>
-    <url>https://github.com/knowitall/reverb-core</url>
-    <connection>scm:git://github.com/knowitall/reverb-core.git</connection>
-    <developerConnection>scm:git:git@github.com:knowitall/reverb-core.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
+  
   <developers>
     <developer>
       <name>Anthony Fader</name>
@@ -38,10 +30,15 @@
     <developer>
       <name>Robert Bart</name>
     </developer>
+    <developer>
+      <name>Philippe Langlais and Fabrizio Gotti (for the adaptation to French)</name>
+    </developer>
   </developers>
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
   <dependencies>
     <dependency>
       <groupId>edu.washington.cs.knowitall</groupId>
@@ -138,24 +135,30 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>commons-io</groupId>
+    	<artifactId>commons-io</artifactId>
+    	<version>20030203.000550</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.googlecode.json-simple</groupId>
+    	<artifactId>json-simple</artifactId>
+    	<version>1.1</version>
+    </dependency>
   </dependencies>
+  
   <build>
     <plugins>
-      <!-- Used for creating a single executable fat jar -->
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.3</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>edu.washington.cs.knowitall.util.CommandLineReVerb</mainClass>
-            </manifest>
-          </archive>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+    <!-- See http://stackoverflow.com/questions/13256654/why-maven-changes-eclipse-project-preferences -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.7</source>
+                <target>1.7</target>
+            </configuration>
+        </plugin>    
+	</plugins>
+	</build>
+  
 </project>
