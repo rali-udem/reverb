@@ -1,6 +1,10 @@
 package edu.washington.cs.knowitall.nlp;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import ca.umontreal.rali.reverbfr.FrenchReverbUtils;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableCollection;
@@ -299,6 +303,114 @@ public class ChunkedSentence extends BIOLayeredSequence {
      */
     public ImmutableCollection<Range> getNpChunkRanges() {
         return getSpans(NP_LAYER, "NP");
+    }
+
+    /**
+     * @return an unmodifiable list over the ranges of the NP chunks in this
+     *         sentence, extended to include adjacent AP chunks, and modified
+     *         to merge patterns of the form "NP de NP"
+     */
+    public ImmutableCollection<Range> getExtendedNpChunkRanges() {
+        ArrayList<Range> result = new ArrayList<Range>();
+
+        ImmutableCollection<Range> npApChunkRanges = getNpApChunkRanges();
+        Range[] npApChunks = npApChunkRanges.toArray(new Range[npApChunkRanges.size()]);
+
+        for (int i = 0; i < npApChunks.length; i++) {
+            Range curRange = npApChunks[i];
+            Range nextRange = null;
+            
+            boolean mergeNext = false;
+            
+            if (i < npApChunks.length - 1) { // not the last token
+                nextRange = npApChunks[i + 1];
+                
+                /*
+                if (curRange.isAdjacentTo(nextRange)) {
+                    if (getPosTag(nextRange.getStart()).equalsIgnoreCase("DET")) {
+                        // la temperature <+> la plus importante
+                        System.err.println("MERGEDET: " + getTokensAsString(curRange.getStart(), nextRange.getEnd() - curRange.getStart()));
+                        mergeNext = true;
+                    }
+                } else
+                */
+                
+                if (curRange.getEnd() == nextRange.getStart() - 1
+                        && FrenchReverbUtils.VARIANTES_DE.contains(getToken(
+                                curRange.getEnd()).toLowerCase())) {
+                    // le journal <+> de montreal
+                    mergeNext = true;
+                }
+
+                
+            }
+            
+            if (mergeNext) {
+                result.add(new Range(curRange.getStart(),
+                        (nextRange.getEnd() - curRange.getStart())));
+                i++;
+            } else {
+                result.add(curRange);
+            }
+        }        
+        
+        return ImmutableList.copyOf(result);
+    }    
+    
+    /**
+     * @return an unmodifiable list over the ranges of the NP chunks in this
+     *         sentence, extended to include adjacent AP chunks.
+     */
+    private ImmutableCollection<Range> getNpApChunkRanges() {
+        ArrayList<Range> result = new ArrayList<Range>();
+        
+        ImmutableCollection<Range> npSpans = getSpans(NP_LAYER, "NP");
+        ImmutableCollection<Range> adjSpans = getSpans(NP_LAYER, "AP");
+        
+        ArrayList<Range> allRanges = new ArrayList<Range>();
+        allRanges.addAll(npSpans);
+        allRanges.addAll(adjSpans);
+        
+        Collections.sort(allRanges);
+        
+        for (int i = 0; i < allRanges.size(); ++i) {
+            Range curRange = allRanges.get(i);
+
+            // we have a np
+            if (getRangeType(curRange).equalsIgnoreCase("NP")) {
+                Range resultRange = curRange;
+                
+                // how many ap can we join to it?
+                for (int j = i + 1; j < allRanges.size(); ++j) {
+                    Range nextRange = allRanges.get(j);
+
+                    if (getRangeType(nextRange).equals("AP") &&
+                            resultRange.isAdjacentTo(nextRange)) {
+                        resultRange = resultRange.join(nextRange);
+                        ++i;
+                    }
+
+                }
+                
+                result.add(resultRange);
+                
+            } else {
+                // no np, just add the range
+                result.add(curRange);
+            }
+            
+        }
+        
+        Collections.sort(result);
+        
+        return ImmutableList.copyOf(result);
+    }
+
+    /**
+     * @return The chunk type of the start of the current range, upper case.
+     */
+    private String getRangeType(Range curRange) {
+        return getChunkTag(curRange.getStart()).split("-")[1].toUpperCase();
     }
 
     /**

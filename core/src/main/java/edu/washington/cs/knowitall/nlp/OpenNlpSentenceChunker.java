@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import ca.umontreal.rali.reverbfr.FrenchReverbUtils;
+import ca.umontreal.rali.reverbfr.ReverbConfiguration;
 import opennlp.tools.chunker.Chunker;
 import opennlp.tools.postag.POSTagger;
 import opennlp.tools.tokenize.Tokenizer;
@@ -119,17 +121,25 @@ public class OpenNlpSentenceChunker implements SentenceChunker {
             tokens = tokenList.toArray(new String[] {});
             posTags = posTagger.tag(tokens);
             npChunkTags = chunker.chunk(tokens, posTags);
+            
         } catch (NullPointerException e) {
             throw new ChunkerException("OpenNLP threw NPE on '" + sent + "'", e);
         }
 
-        if (attachOfs)
-            OpenNlpUtils.attachOfs(tokens, npChunkTags);
-        if (attachPossessives)
-            OpenNlpUtils.attachPossessives(posTags, npChunkTags);
-
+        if (ReverbConfiguration.isEn()) {
+            if (attachOfs)
+                OpenNlpUtils.attachOfs(tokens, npChunkTags);
+            if (attachPossessives)
+                OpenNlpUtils.attachPossessives(posTags, npChunkTags);
+        } else if (ReverbConfiguration.isFr()) {
+            FrenchReverbUtils.attachDe(tokens, npChunkTags);
+            FrenchReverbUtils.fixPonctuationChunks(tokens, posTags, npChunkTags);
+            FrenchReverbUtils.fixClitics(tokens, posTags, npChunkTags);
+        }
+        
         ChunkedSentence result = new ChunkedSentence(
                 ranges.toArray(new Range[] {}), tokens, posTags, npChunkTags);
         return result;
     }
+
 }

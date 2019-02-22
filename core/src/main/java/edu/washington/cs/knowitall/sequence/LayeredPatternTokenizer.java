@@ -20,7 +20,8 @@ import java.util.regex.Pattern;
 public class LayeredPatternTokenizer {
 
     // The pattern used to match layer/symbol pairs like The_pos
-    private final String tokenPatternStr = "([a-zA-Z0-9\\-.,:;?!\"'`$]+)_([a-zA-Z0-9\\-]+)";
+    //private final String tokenPatternStr = "([a-zA-Z0-9\\-.,:;?!\"'`$]+)_([a-zA-Z0-9\\-]+)";
+    private final String tokenPatternStr = "([a-zA-Z0-9àâèéêëîôùû\\-\\+.,:;?!\"'`$]+)_([a-zA-Z0-9\\-]+)";
     private final Pattern tokenPattern = Pattern.compile(tokenPatternStr);
 
     // The allowed meta-characters
