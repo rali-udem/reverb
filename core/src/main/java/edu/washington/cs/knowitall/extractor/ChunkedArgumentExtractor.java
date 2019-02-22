@@ -3,6 +3,7 @@ package edu.washington.cs.knowitall.extractor;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import ca.umontreal.rali.reverbfr.ReverbConfiguration;
 import edu.washington.cs.knowitall.commonlib.Range;
 import edu.washington.cs.knowitall.nlp.ChunkedSentence;
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedArgumentExtraction;
@@ -87,10 +88,11 @@ public class ChunkedArgumentExtractor extends Extractor<ChunkedExtraction, Chunk
      */
     protected Collection<ChunkedArgumentExtraction> extractCandidates(ChunkedExtraction rel) {
         ChunkedSentence sent = rel.getSentence();
-        Collection<Range> npChunkRanges = removeRangeOverlapWithRelation(rel, sent.getNpChunkRanges());
+        Collection<Range> npChunkRanges = removeRangeOverlapWithRelation(rel, 
+                ReverbConfiguration.isEn() ? sent.getNpChunkRanges() : sent.getExtendedNpChunkRanges());
         Collection<ChunkedArgumentExtraction> args = new ArrayList<ChunkedArgumentExtraction>();
         for (Range npChunkRange : npChunkRanges) {
-            if (acceptRange(rel, npChunkRange)) {
+            if (acceptRange(rel, npChunkRange) && (ReverbConfiguration.isEn() || !hardBoundaries(rel, npChunkRange))) {
                 ChunkedArgumentExtraction arg = new ChunkedArgumentExtraction(sent, npChunkRange, rel);
                 args.add(arg);
             }
@@ -98,6 +100,35 @@ public class ChunkedArgumentExtractor extends Extractor<ChunkedExtraction, Chunk
         return args;
     }
 
+    /**
+     * 
+     * @param rel
+     * @param npChunkRange
+     * @return <code>true</code> iff there are hard boundaries (i.e. obstacles)
+     *         between the rel and the chunk that make the chunk invalid.
+     *         Example: in "Luc Robitaille (born in Canada) is a professional ice hockey player."
+     *         obstactle btwn Canada and is 
+     */
+    private boolean hardBoundaries(ChunkedExtraction rel, Range npChunkRange) {
+        
+        int startPos  = mode == Mode.LEFT ? npChunkRange.getStart(): rel.getStart();
+        int endPos    = mode == Mode.LEFT ? rel.getStart() + rel.getLength() : npChunkRange.getEnd();
+        
+        int nbParenth = 0;
+        int nbCommas = 0;
+        for (int i = startPos; i < endPos; ++i) {
+            String curToken = rel.getSentence().getToken(i);
+            if (curToken.equals("(") || curToken.equals(")")) {
+                ++nbParenth;
+            } else if (curToken.equals(",")) {
+                ++nbCommas;
+            }
+        }
+        
+        boolean boundaries = (nbParenth % 2 != 0) || (nbCommas == 1);
+        
+        return boundaries;
+    }
 
 
 }

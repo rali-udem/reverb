@@ -20,12 +20,12 @@ import java.util.Locale;
 
 /**
  * A <em>master switch</em> allowing to switch from English to French for
- * the ReVerb framework. By default, the locale is French.
+ * the ReVerb framework. By default, the locale is English.
  *
  */
 public class ReverbConfiguration {
 
-    private static Locale curLocale;
+    private static Locale curLocale = Locale.ENGLISH;
 
     /**
      * Specifies the locale.

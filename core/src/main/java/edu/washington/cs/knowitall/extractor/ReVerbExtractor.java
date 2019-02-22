@@ -3,17 +3,19 @@ package edu.washington.cs.knowitall.extractor;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.util.Locale;
+import java.util.Scanner;
+
+import ca.umontreal.rali.reverbfr.FrenchReverbUtils;
+import ca.umontreal.rali.reverbfr.ReverbConfiguration;
 
 import com.google.common.base.Joiner;
 
-import edu.washington.cs.knowitall.extractor.conf.ConfidenceFunction;
-import edu.washington.cs.knowitall.extractor.conf.ReVerbOpenNlpConfFunction;
 import edu.washington.cs.knowitall.extractor.mapper.ReVerbArgument1Mappers;
 import edu.washington.cs.knowitall.extractor.mapper.ReVerbArgument2Mappers;
 import edu.washington.cs.knowitall.nlp.ChunkedSentence;
-import edu.washington.cs.knowitall.nlp.ChunkedSentenceReader;
+import edu.washington.cs.knowitall.nlp.OpenNlpSentenceChunker;
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedBinaryExtraction;
-import edu.washington.cs.knowitall.util.DefaultObjects;
 
 
 public class ReVerbExtractor extends ReVerbRelationExtractor {
@@ -39,15 +41,24 @@ public class ReVerbExtractor extends ReVerbRelationExtractor {
     }
 
     protected void initializeArgumentExtractors() {
-
+        
         ChunkedArgumentExtractor arg1Extr =
             new ChunkedArgumentExtractor(ChunkedArgumentExtractor.Mode.LEFT);
-        arg1Extr.addMapper(new ReVerbArgument1Mappers());
+        
+        if (ReverbConfiguration.isEn()) {
+            arg1Extr.addMapper(new ReVerbArgument1Mappers());
+        } else if (ReverbConfiguration.isFr()) {
+            arg1Extr.addMapper(new FrenchReverbArgument1Mappers());
+        }
         setArgument1Extractor(arg1Extr);
 
         ChunkedArgumentExtractor arg2Extr = new ChunkedArgumentExtractor(
                 ChunkedArgumentExtractor.Mode.RIGHT);
-        arg2Extr.addMapper(new ReVerbArgument2Mappers());
+        if (ReverbConfiguration.isEn()) {
+            arg2Extr.addMapper(new ReVerbArgument2Mappers());
+        } else if (ReverbConfiguration.isFr()) {
+            arg2Extr.addMapper(new FrenchReverbArgument2Mappers());
+        }
         setArgument2Extractor(arg2Extr);
     }
 
@@ -60,6 +71,13 @@ public class ReVerbExtractor extends ReVerbRelationExtractor {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
+        
+        if (args.length > 2) {
+            System.err.println("Usage: prog [file or nothing]");
+            System.exit(1);
+        }       
+        
+        ReverbConfiguration.setLocale(Locale.FRENCH);
 
         BufferedReader reader;
         if (args.length == 0) {
@@ -76,33 +94,54 @@ public class ReVerbExtractor extends ReVerbRelationExtractor {
         System.err.println("Done.");
 
         System.err.print("Initializing confidence function...");
-        ConfidenceFunction scoreFunc = new ReVerbOpenNlpConfFunction();
-        System.err.println("Done.");
+        // ConfidenceFunction scoreFunc = new ReVerbOpenNlpConfFunction();
+        // System.err.println("Done.");
+        System.err.println("Skipped!");
 
         System.err.print("Initializing NLP tools...");
-        ChunkedSentenceReader sentReader = DefaultObjects.getDefaultSentenceReader(reader);
+        // ChunkedSentenceReader sentReader = DefaultObjects.getDefaultSentenceReader(reader);
+        OpenNlpSentenceChunker chunker = new OpenNlpSentenceChunker();
         System.err.println("Done.");
 
         Joiner joiner = Joiner.on("\t");
 
-        for (ChunkedSentence sent : sentReader.getSentences()) {
+        Scanner scanner = new Scanner(reader);
+        String sentStr = "";
+        
+        while (scanner.hasNext()) {
+            
+            sentStr = scanner.nextLine();
+            ChunkedSentence sent = chunker.chunkSentence(sentStr);
 
             sentenceCount++;
+            
+            if (sentenceCount % 10000 == 0) {
+                System.err.print(".");
+            }
 
-            String sentString = sent.getTokensAsString();
-            System.out.println(String.format("sentence\t%s\t%s", sentenceCount, sentString));
+            System.out.println(String.format("SENT\t%s", sentStr));
+            String[] res = FrenchReverbUtils.formatSentAndPos(sent);
+            String sentence = res[0];
+            String posTags  = res[1];
+            String chunkTags = res[2];
+            
+            System.out.println(String.format("TOKS\t%s", sentence));
+            System.out.println(String.format("POS \t%s", posTags));
+            System.out.println(String.format("CHNK\t%s", chunkTags));
 
             for (ChunkedBinaryExtraction extr : extractor.extract(sent)) {
 
-                double score = scoreFunc.getConf(extr);
+                // double score = scoreFunc.getConf(extr);
+                double score = Double.NaN;
 
                 String arg1 = extr.getArgument1().toString();
                 String rel = extr.getRelation().toString();
                 String arg2 = extr.getArgument2().toString();
 
-                String extrString = joiner.join(sentenceCount, arg1, rel, arg2, score);
+                //String extrString = joiner.join(sentenceCount, arg1, rel, arg2, score);
+                String extrString = joiner.join(arg1, "==", rel, "==", arg2);
 
-                System.out.println("extraction\t" + extrString);
+                System.out.println("EXTR\t" + extrString);
 
                 extractionCount++;
             }

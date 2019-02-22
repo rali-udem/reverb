@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
+import ca.umontreal.rali.reverbfr.ReverbConfiguration;
+
 import com.google.common.collect.Iterables;
 
 import edu.washington.cs.knowitall.extractor.mapper.ReVerbRelationDictionaryFilter;
@@ -21,18 +23,32 @@ public abstract class ReVerbRelationExtractor extends RelationFirstNpChunkExtrac
     /**
      * Definition of the "verb" of the relation pattern.
      */
-    public static final String VERB =
+    public static final String VERB = ReverbConfiguration.isEn() ?
         // Optional adverb
         "RB_pos? " +
         // Modal or other verbs
         "[MD_pos VB_pos VBD_pos VBP_pos VBZ_pos VBG_pos VBN_pos] " +
         // Optional particle/adverb
-        "RP_pos? RB_pos?";
+        "RP_pos? RB_pos?" :
+        
+        // ============ FRENCH
+        // Attention au blanc apres chaque morceau de string sauf le dernier
+            
+        // Adverbe optionnel
+        "ADV_pos? " +
+        // clitique reflexif ou objet (se, s', nous, etc.)
+        "[CLO_pos CLR_pos]? " +
+        // Verbe + participe passé? + ADV + participe passé?   verbe infinitif
+        "[V_pos] VPP_pos? ADV_pos? VPP_pos? (VINF_pos|P_pos VINF_pos)? " +
+        // Adverbe optionnel
+        "ADV_pos? " +
+        // Some prepositions
+        "[P_pos P+D_pos]?";
 
     /**
      * Definition of the "non-verb/prep" part of the relation pattern.
      */
-    public static final String WORD =
+    public static final String WORD =         
         "[$_pos PRP$_pos CD_pos DT_pos JJ_pos JJS_pos JJR_pos NN_pos " +
         "NNS_pos NNP_pos NNPS_pos POS_pos PRP_pos RB_pos RBR_pos RBS_pos " +
         "VBN_pos VBG_pos]";
@@ -54,6 +70,12 @@ public abstract class ReVerbRelationExtractor extends RelationFirstNpChunkExtrac
      */
     public static final String SHORT_RELATION_PATTERN =
         String.format("(%s (%s)?)+", VERB, PREP);
+    
+    /**
+     * French simple pattern
+     */
+    public static final String FRENCH_RELATION_PATTERN_01 =
+            String.format("(%s)+", VERB);
 
     /**
      * Constructs a new extractor using the default relation pattern,
@@ -106,21 +128,37 @@ public abstract class ReVerbRelationExtractor extends RelationFirstNpChunkExtrac
         ExtractorUnion<ChunkedSentence, ChunkedExtraction> relExtractor =
             new ExtractorUnion<ChunkedSentence, ChunkedExtraction>();
 
-        try {
-            relExtractor.addExtractor(new RegexExtractor(SHORT_RELATION_PATTERN));
-        } catch (SequenceException e) {
-            throw new ExtractorException(
-                "Unable to initialize short pattern extractor", e);
+        if (ReverbConfiguration.isEn()) {
+            try {
+                relExtractor.addExtractor(new RegexExtractor(SHORT_RELATION_PATTERN));
+            } catch (SequenceException e) {
+                throw new ExtractorException(
+                    "Unable to initialize short pattern extractor", e);
+            }
+    
+            try {
+                relExtractor.addExtractor(new RegexExtractor(LONG_RELATION_PATTERN));
+            } catch (SequenceException e) {
+                throw new ExtractorException(
+                    "Unable to initialize long pattern extractor", e);
+            }
         }
-
-        try {
-            relExtractor.addExtractor(new RegexExtractor(LONG_RELATION_PATTERN));
-        } catch (SequenceException e) {
-            throw new ExtractorException(
-                "Unable to initialize long pattern extractor", e);
+        
+        if (ReverbConfiguration.isFr()) {
+            try {
+                relExtractor.addExtractor(new RegexExtractor(FRENCH_RELATION_PATTERN_01));
+            } catch (SequenceException e) {
+                throw new ExtractorException(
+                    "Unable to initialize French relation pattern 01", e);
+            }
         }
+        
         try {
-        	relExtractor.addMapper(new ReVerbRelationMappers(minFreq, useLexSynConstraints, mergeOverlapRels));
+            if (ReverbConfiguration.isEn()) {
+                relExtractor.addMapper(new ReVerbRelationMappers(minFreq, useLexSynConstraints, mergeOverlapRels));
+            } else {
+                relExtractor.addMapper(new ReVerbRelationMappers(0, false, true));
+            }
 	    } catch (IOException e) {
             throw new ExtractorException(
                 "Unable to initialize relation mappers", e);
