@@ -1,0 +1,271 @@
+Sent=Denis Coderre est vraiment le maire de Montréal.
+Arg1=Denis Coderre
+Rel=est vraiment
+(être vraiment)
+Canon: (être vraiment)
+Arg2=le maire de Montréal
+Sent=Denis Coderre n'est pas le maire de Montréal.
+Arg1=Denis Coderre
+Rel=n' est pas
+(n' être pas)
+Canon: (ne pas être)
+Arg2=le maire de Montréal
+Sent=Bruxelles perd toute emprise sur les provinces du  nord.
+Arg1=Bruxelles
+Rel=perd
+(perdre)
+Canon: (perdre)
+Arg2=toute emprise
+Sent=Nous nommâmes cette montagne le mont Royal.
+Arg1=Nous
+Rel=nommâmes
+(nommer)
+Canon: (nommer)
+Arg2=cette montagne
+Sent=La ville est située dans les basses-terres du Saint-Laurent, une grande vallée plane située entre les Appalaches et les Laurentides.
+Arg1=La ville
+Rel=est située dans
+(être situer dans)
+Canon: (être situer dans)
+Arg2=les basses -terres du Saint-Laurent
+Sent=" Montréal " est une ville du Québec dont elle est la métropole, le centre de la culture et des affaires.
+Arg1=Montréal
+Rel=est
+(être)
+Canon: (être)
+Arg2=une ville du Québec
+Arg1=elle
+Rel=est
+(être)
+Canon: (être)
+Arg2=la métropole
+Sent=Montréal a accueilli l'Exposition universelle de 1967 et les Jeux olympiques d'été de 1976.
+Arg1=Montréal
+Rel=a accueilli
+(avoir accueillir)
+Canon: (accueillir)
+Arg2=l' Exposition universelle de 1967
+Sent=Son quartier historique, le Vieux-Montréal, a été déclaré arrondissement historique en 1964.
+Arg1=Son quartier historique
+Rel=a été déclaré
+(avoir être déclarer)
+Canon: (être déclarer)
+Arg2=arrondissement historique
+Sent=" Luc-Normand Tellier " (né le 10 octobre 1944 à Montréal, Québec, Canada) est professeur émérite d'économie spatiale de l' Université du Québec
+Arg1=Tellier
+Rel=est
+(être)
+Canon: (être)
+Arg2=professeur émérite d' économie spatiale de l' Université du Québec
+Sent=Nous sommes les robots.
+Arg1=Nous
+Rel=sommes
+(sommer)
+Canon: (sommer)
+Arg2=les robots
+Sent=Nous nous sommes perdus en ville.
+Arg1=Nous
+Rel=nous sommes perdus en
+(se sommer perdre en)
+Canon: (se sommer perdre en)
+Arg2=ville
+Sent=Ce joli train du nord a des roues vertes du nord.
+Arg1=Ce joli train du nord
+Rel=a
+(avoir)
+Canon: (avoir)
+Arg2=des roues vertes du nord
+Sent=Cet homme et cette femme sont mes amis
+Arg1=cette femme
+Rel=sont
+(être)
+Canon: (être)
+Arg2=mes amis
+Sent=C'est la ville de Cartier.
+Sent=Un train vert emporte ses amis.
+Arg1=Un train vert
+Rel=emporte
+(emporter)
+Canon: (emporter)
+Arg2=ses amis
+Sent=Luc Robitaille (né au Canada) est un joueur professionnel de hockey sur glace canadien.
+Arg1=Luc Robitaille
+Rel=est
+(être)
+Canon: (être)
+Arg2=un joueur professionnel de hockey
+Sent=" Charles Gagnon " (né le au Bic, mort le à Montréal) est un homme politique, ancien felquiste et leader communiste au Québec et au Canada.
+Sent=La majeure partie de la ville est située sur l'île de Montréal, dans l'archipel d'Hochelaga, en bordure du Saint-Laurent, à proximité de l'Ontario et des États-Unis.
+Arg1=La majeure partie de la ville
+Rel=est située sur
+(être situer sur)
+Canon: (être situer sur)
+Arg2=l' île de Montréal
+Sent=Le concurrent de SNC, la firme d'ingénierie Lavalin, éprouve de sérieuses difficultés financières au printemps 1991.
+Arg1=Le concurrent de SNC
+Rel=éprouve
+(éprouver)
+Canon: (éprouver)
+Arg2=de sérieuses difficultés financières
+Sent=" Jacques Chagnon ", né le 31 décembre 2013 à Montréal, est un homme politique québécois.
+Arg1=Jacques Chagnon
+Rel=est
+(être)
+Canon: (être)
+Arg2=un homme politique
+Sent= Montréal a accueilli l'Exposition universelle de 1967 et les Jeux olympiques d'été de 1976.
+Arg1=Montréal
+Rel=a accueilli
+(avoir accueillir)
+Canon: (accueillir)
+Arg2=l' Exposition universelle de 1967
+Sent=Montréal est la plus importante ville francophone d'Amérique.
+Arg1=Montréal
+Rel=est
+(être)
+Canon: (être)
+Arg2=la plus importante ville francophone d' Amérique
+Sent=Jules n'a pu comparer Venise à Montréal
+Arg1=Jules
+Rel=n' a pu comparer
+(n' avoir pouvoir comparer)
+Canon: (ne pouvoir comparer)
+Arg2=Venise
+Sent=La ville de Montréal prévoit augmenter le nombre à 800 kilomètres d'ici 2015.
+Arg1=La ville de Montréal
+Rel=prévoit augmenter
+(prévoir augmenter)
+Canon: (prévoir augmenter)
+Arg2=le nombre
+Sent=En 2010, 3,3 millions de déplacements en BIXI ont été enregistrés; le réseau compte plus de 30000 abonnés.
+Arg1=3,3 millions de déplacements
+Rel=ont été enregistrés
+(avoir être enregistrer)
+Canon: (être enregistrer)
+Arg2=le réseau
+Arg1=le réseau
+Rel=compte plus de
+(compter plus de)
+Canon: (compter plus de)
+Arg2=30000 abonnés
+Sent=Molson a ouvert sa septième brasserie à Moncton (Nouveau Brunswick) le 12 octobre 2007.
+Arg1=Molson
+Rel=a ouvert
+(avoir ouvrir)
+Canon: (ouvrir)
+Arg2=sa septième brasserie
+Sent=L'immigration est le principal moteur de la croissance démographique montréalaise.
+Arg1=L' immigration
+Rel=est
+(être)
+Canon: (être)
+Arg2=le principal moteur de la croissance démographique
+Sent=Bell Canada a alors déposé une nouvelle demande le 4 mars 2013, qui a été approuvée le 27 juin 2013
+Arg1=Bell Canada
+Rel=a alors déposé
+(avoir alors déposer)
+Canon: (déposer)
+Arg2=une nouvelle demande
+Sent=C'est l'explorateur français Jacques Cartier, lors de son second voyage en Amérique, qui baptise la montagne qui surplombe aujourd'hui la ville.
+Arg1=Jacques Cartier
+Rel=baptise
+(baptiser)
+Canon: (baptiser)
+Arg2=la montagne
+Arg1=la montagne
+Rel=surplombe aujourd'hui
+(surplomber aujourd'hui)
+Canon: (surplomber aujourd'hui)
+Arg2=la ville
+Sent=La  couverture neigeuse  la  plus importante  a   été  mesurée  le   12  mars 1971 avec 102   cm.
+Arg1=la plus importante
+Rel=a été mesurée
+(avoir être mesurer)
+Canon: (être mesurer)
+Arg2=le 12 mars 1971
+Sent=Sur les 22 municipalités fusionnées en 2002 qui n'ont pas obtenu d'avoir la tenue d'un référendum.
+Arg1=les 22 municipalités
+Rel=n' ont pas obtenu d' avoir
+(n' avoir pas obtenir de avoir)
+Canon: (ne pas obtenir de avoir)
+Arg2=la tenue d' un référendum
+Sent=Il est renommé pour sa poutine et ils se sont trompés, mais ils ont reconnu leur erreur.
+Arg1=Il
+Rel=est renommé pour
+(être renommer pour)
+Canon: (être renommer pour)
+Arg2=sa poutine
+Arg1=ils
+Rel=ont reconnu
+(avoir reconnaître)
+Canon: (reconnaître)
+Arg2=leur erreur
+Sent=Les Canadiens sont situés sur la rivière Stephen Harper.
+Arg1=Les Canadiens
+Rel=sont situés sur
+(être situer sur)
+Canon: (être situer sur)
+Arg2=la rivière Stephen Harper
+Sent=Les Canadiens ont mangé de la misère pour Stephen Harper.
+Arg1=Les Canadiens
+Rel=ont mangé de
+(avoir manger de)
+Canon: (manger de)
+Arg2=la misère
+Sent=Les Canadiens sont renommés pour Stephen Harper.
+Arg1=Les Canadiens
+Rel=sont renommés pour
+(être renommer pour)
+Canon: (être renommer pour)
+Arg2=Stephen Harper
+Sent=Les Canadiens se sont aperçus de Stephen Harper.
+Arg1=Les Canadiens
+Rel=se sont aperçus de
+(se être apercevoir de)
+Canon: (se apercevoir de)
+Arg2=Stephen Harper
+Sent=Les Canadiens ne se sont pas trompés sur Stephen Harper.
+Arg1=Les Canadiens
+Rel=ne se sont pas trompés sur
+(ne se être pas tromper sur)
+Canon: (ne pas se tromper sur)
+Arg2=Stephen Harper
+Sent=Le référendum tenu en Australie est basé sur une question.
+Arg1=Le référendum
+Rel=est basé sur
+(être baser sur)
+Canon: (être baser sur)
+Arg2=une question
+Sent=Les Canadiens ne l'ont pas trompés sur Stephen Harper.
+Arg1=Les Canadiens
+Rel=ne l' ont pas trompés sur
+(ne le avoir pas tromper sur)
+Canon: (ne pas le tromper sur)
+Arg2=Stephen Harper
+Sent=Les immigrants en Chine expédient de l'argent.
+Arg1=Les immigrants
+Rel=expédient de
+(expédier de)
+Canon: (expédier de)
+Arg2=l' argent
+Sent=« Le but est de les initier à nos classiques, à notre folklore, afin de leur donner une base à laquelle ils n’auraient pas accès si facilement », explique M. Gagnon, qui depuis 20 ans transmet notre littérature aux exilés.
+Arg1=Le but
+Rel=est de
+(être de)
+Canon: (être de)
+Arg2=les initier
+Arg1=ils
+Rel=n’auraient pas
+(n’auraient pas)
+Canon: (n’auraient pas)
+Arg2=accès si facilement »
+Arg1=notre folklore
+Rel=explique
+(expliquer)
+Canon: (expliquer)
+Arg2=M. Gagnon
+Arg1=20 ans
+Rel=transmet
+(transmettre)
+Canon: (transmettre)
+Arg2=notre littérature
