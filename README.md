@@ -99,7 +99,7 @@ BibTeX citation:
 
 If you use the French adaptation, please also cite:
 
-     @article {1553,
+     @article {GottiLanglaisReverb2016,
        title = {From French Wikipedia to Erudit: A test case for cross-domain open information extraction},
        journal = {Computational Intelligence},
        year = {2016},
