@@ -1,0 +1,14 @@
+The French version of ReVerb uses models for processing several common Natural 
+Language Processing tasks in French with Apache OpenNLP. These models are 
+made available by Nicolas Hernandez here:
+
+https://sites.google.com/site/nicolashernandez/resources/opennlp
+
+Their licence states
+
+The French Treebank licence does not prevent to distribute its analysis 
+results under whatever licence but it mentions that the it should be used only 
+for research purpose. Consequently we restrict the use of these models only 
+for research purposes.
+
+NO COMMERCIAL USE.
