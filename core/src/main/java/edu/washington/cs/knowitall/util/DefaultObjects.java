@@ -28,12 +28,7 @@ import edu.washington.cs.knowitall.nlp.ChunkedSentenceReader;
 
 public class DefaultObjects {
 
-    public static final String frenchResDirectory = "opennlp/fr-hernandez/";
-    public static final String tokenizerModelFile = ReverbConfiguration.isEn() ? "en-token.bin" : frenchResDirectory + "fr-token.bin";
-    public static final String taggerModelFile = ReverbConfiguration.isEn() ? "en-pos-maxent.bin" : frenchResDirectory + "fr-pos.bin";
-    public static final String chunkerModelFile = ReverbConfiguration.isEn() ? "en-chunker.bin" : frenchResDirectory + "fr-chunk.bin";
-    public static final String sentDetectorModelFile = ReverbConfiguration.isEn() ? "en-sent.bin" : frenchResDirectory + "fr-sent.bin";
-    public static final String confFunctionModelFile = ReverbConfiguration.isEn() ? "reverb-conf-maxent.gz" : frenchResDirectory + "reverb-conf-maxent.gz";
+    private static final String FRENCH_RES_DIRECTORY = "opennlp/fr-hernandez/";
 
     /** Default singleton objects */
     private static BracketsRemover BRACKETS_REMOVER;
@@ -46,9 +41,8 @@ public class DefaultObjects {
                 .getResourceAsStream(resource);
         if (in == null) {
             throw new IOException("Couldn't load resource: " + resource);
-        } else {
-            return in;
-        }
+        } 
+        return in;
     }
 
     public static void initializeNlpTools() throws IOException {
@@ -60,24 +54,24 @@ public class DefaultObjects {
 
     public static Tokenizer getDefaultTokenizer() throws IOException {
         return ReverbConfiguration.isEn() ? 
-               new TokenizerME(new TokenizerModel(getResourceAsStream(tokenizerModelFile))) :
+               new TokenizerME(new TokenizerModel(getResourceAsStream(DefaultObjects.getTokenizermodelfile()))) :
                new PatchedFrenchTokenizer();
     }
 
     public static POSTagger getDefaultPosTagger() throws IOException {
         return new POSTaggerME(new POSModel(
-                getResourceAsStream(taggerModelFile)));
+                getResourceAsStream(getTaggermodelfile())));
     }
 
     public static Chunker getDefaultChunker() throws IOException {
         return new ChunkerME(new ChunkerModel(
-                getResourceAsStream(chunkerModelFile)));
+                getResourceAsStream(getChunkermodelfile())));
     }
 
     public static SentenceDetector getDefaultSentenceDetector()
             throws IOException {
         return new SentenceDetectorME(new SentenceModel(
-                getResourceAsStream(sentDetectorModelFile)));
+                getResourceAsStream(getSentdetectormodelfile())));
     }
 
     public static void addDefaultSentenceFilters(SentenceExtractor extractor) {
@@ -118,11 +112,13 @@ public class DefaultObjects {
      */
     public static ChunkedSentenceReader getDefaultSentenceReader(Reader in,
             boolean htmlSource) throws IOException {
+        ChunkedSentenceReader result;
         if (htmlSource) {
-            return getDefaultSentenceReaderHtml(in);
+            result = getDefaultSentenceReaderHtml(in);
         } else {
-            return getDefaultSentenceReader(in);
+            result = getDefaultSentenceReader(in);
         }
+        return result;
     }
 
     public static ChunkedSentenceReader getDefaultSentenceReader(Reader in)
@@ -137,5 +133,25 @@ public class DefaultObjects {
         ChunkedSentenceReader reader = new ChunkedSentenceReader(in,
                 getDefaultHtmlSentenceExtractor());
         return reader;
+    }
+
+    public static String getTokenizermodelfile() {
+        return ReverbConfiguration.isEn() ? "en-token.bin" : FRENCH_RES_DIRECTORY + "fr-token.bin";
+    }
+
+    public static String getTaggermodelfile() {
+        return ReverbConfiguration.isEn() ? "en-pos-maxent.bin" : FRENCH_RES_DIRECTORY + "fr-pos.bin";
+    }
+
+    public static String getChunkermodelfile() {
+        return ReverbConfiguration.isEn() ? "en-chunker.bin" : FRENCH_RES_DIRECTORY + "fr-chunk.bin";
+    }
+
+    public static String getSentdetectormodelfile() {
+        return ReverbConfiguration.isEn() ? "en-sent.bin" : FRENCH_RES_DIRECTORY + "fr-sent.bin";
+    }
+
+    public static String getConffunctionmodelfile() {
+        return ReverbConfiguration.isEn() ? "reverb-conf-maxent.gz" : FRENCH_RES_DIRECTORY + "reverb-conf-maxent.gz";
     }
 }

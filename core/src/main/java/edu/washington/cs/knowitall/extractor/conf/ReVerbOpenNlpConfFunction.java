@@ -40,7 +40,7 @@ public class ReVerbOpenNlpConfFunction implements ConfidenceFunction {
      */
     public ReVerbOpenNlpConfFunction() throws ConfidenceFunctionException,
             IOException {
-        this(DefaultObjects.confFunctionModelFile);
+        this(DefaultObjects.getConffunctionmodelfile());
     }
 
     /**

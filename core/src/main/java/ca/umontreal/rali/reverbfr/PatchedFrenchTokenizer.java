@@ -38,7 +38,7 @@ public class PatchedFrenchTokenizer implements Tokenizer {
     
     public PatchedFrenchTokenizer() {
         try {
-            baseTokenizer = new TokenizerME(new TokenizerModel(DefaultObjects.getResourceAsStream(DefaultObjects.tokenizerModelFile)));
+            baseTokenizer = new TokenizerME(new TokenizerModel(DefaultObjects.getResourceAsStream(DefaultObjects.getTokenizermodelfile())));
         } catch (InvalidFormatException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
