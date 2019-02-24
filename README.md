@@ -75,7 +75,7 @@ how to use this package. Make sure that the instruction
 extraction logic. This switches ReVerb from English to French. Without this,
 ReVerb will expect English.
 
-## Help and Contact
+# Help and Contact
 For more information, please visit the ReVerb homepage at the University of 
 Washington: <http://reverb.cs.washington.edu>.
 
@@ -83,7 +83,7 @@ Please contact [Philippe Langlais](http://www.iro.umontreal.ca/~felipe/) for
 the adaptation to French.
 
 
-## Citing ReVerb
+# Citing ReVerb
 If you use ReVerb in your academic work, please cite ReVerb with the following 
 BibTeX citation:
 
