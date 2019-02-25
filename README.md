@@ -1,7 +1,7 @@
 # A French Version of ReVerb
 
-This package is an adaptation of ReVerb to the French language created
-by [RALI](http://rali.iro.umontreal.ca/), at the Université de Montréal, by 
+This package is an adaptation of ReVerb to the French language. It has been created
+at [RALI](http://rali.iro.umontreal.ca/) (Université de Montréal) by 
 [Philippe Langlais](http://www.iro.umontreal.ca/~felipe/) and his team.
 
 The original ReVerb ([on GitHub](https://github.com/knowitall/reverb)) was developed 
@@ -26,7 +26,7 @@ documented on the original GitHub repository
 [here](https://github.com/knowitall/reverb), and therefore produces 
 English triples from English text.
 
-However, additions have been made for the end-user wishing to produce French 
+However, additions have been made for the user wishing to produce French 
 triples from French text.
 
 ## Command-line utility
@@ -73,7 +73,8 @@ for the source code for the program mentioned above, as well as an example on
 how to use this package. Make sure that the instruction 
 `ReverbConfiguration.setLocale(Locale.FRENCH);` precedes all 
 extraction logic. This switches ReVerb from English to French. Without this,
-ReVerb will expect English.
+ReVerb will expect English. Switching back to English within the same program
+does not work.
 
 # Help and Contact
 For more information, please visit the ReVerb homepage at the University of 
@@ -82,6 +83,7 @@ Washington: <http://reverb.cs.washington.edu>.
 Please contact [Philippe Langlais](http://www.iro.umontreal.ca/~felipe/) for
 the adaptation to French.
 
+The licenses for this package specifically forbid commercial use.
 
 # Citing ReVerb
 If you use ReVerb in your academic work, please cite ReVerb with the following 
