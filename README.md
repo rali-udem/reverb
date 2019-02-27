@@ -17,7 +17,7 @@ by the following people at the
 * Jonathan Berant <http://www.cs.tau.ac.il/~jonatha6>
 
 It is worth noting that the French version does not
-provide a confidence function for the produced triples.
+provide a confidence function for the triples produced.
 
 # How to Use
 
@@ -56,8 +56,12 @@ will produce
 	RelLemma=avoir être élire en
 	RelCanon=être élire en
 	
-where arg1, the relation and arg2 are output, including a lemmatized version
-and a simplified version of the relation.
+where Arg1, the relation and Arg2 are output. Also, a lemmatized version
+and a simplified version of the relation are produced. The simplified version
+is the result of applying a few heuristics on the relation in order to provide
+a canonical representation. This reduces the number of different relations when
+ReVerb is applied to large amounts of text. This in turn facilitates collating
+triples for various purposes.
 
 It is possible to provide multiple sentences to the program, by piping in 
 a file containing one sentence per line, e.g.
@@ -83,7 +87,7 @@ Washington: <http://reverb.cs.washington.edu>.
 Please contact [Philippe Langlais](http://www.iro.umontreal.ca/~felipe/) for
 the adaptation to French.
 
-The licenses for this package specifically forbid commercial use.
+The licenses for this package explicitly forbid commercial use.
 
 # Citing ReVerb
 If you use ReVerb in your academic work, please cite ReVerb with the following 
@@ -111,4 +115,7 @@ If you use the French adaptation, please also cite:
        pdf = {http://rali.iro.umontreal.ca/rali/sites/default/files/publis/coin.12120.pdf},
        author = {Fabrizio Gotti and Philippe Langlais}
      }
-    
+
+The embedded French lemmatizer uses OpenNLP and the work of Nicolas Hernandez. 
+See [his website](https://sites.google.com/site/nicolashernandez/resources/opennlp) 
+for more information. 
